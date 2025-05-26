@@ -1,6 +1,6 @@
 from app import app
-
-from flask import render_template
+from app.forms import ExtractForm
+from flask import redirect, render_template, url_for
 
 
 @app.route("//product/<product_id>")
@@ -20,5 +20,12 @@ def about():
     return render_template("about.html")
 
 @app.route("/extract")
+def render_forms():
+    form=ExtractForm()
+    return render_template("extract.html",form=form)
+
+@app.route("/extract", methods=['POST'])
 def extract():
-    return render_template("extract.html")
+    form=ExtractForm()
+    product_id=form.porduct_id
+    return redirect(url_for("product",product_id=product_id))
